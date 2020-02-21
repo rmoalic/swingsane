@@ -61,7 +61,7 @@ public final class Localizer {
 
   private static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
 
-  private static Locale currentLocale = DEFAULT_LOCALE;
+  private static Locale currentLocale = null;
 
   private static final Logger LOG = Logger.getLogger(Localizer.class);
 

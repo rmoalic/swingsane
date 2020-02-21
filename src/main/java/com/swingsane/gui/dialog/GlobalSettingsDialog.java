@@ -327,7 +327,7 @@ public class GlobalSettingsDialog extends JDialog {
           }
         });
         {
-          JButton saveButton = new JButton("Save");
+          JButton saveButton = new JButton(Localizer.localize("Save"));
           buttonPane.add(saveButton);
           saveButton.addActionListener(new ActionListener() {
             @Override

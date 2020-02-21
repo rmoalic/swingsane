@@ -1250,7 +1250,7 @@ public class SwingSaneWindow implements IComponents, IScanEventHandler {
     gbc_globalSettingsButton.gridy = 0;
     buttonPanel.add(globalSettingsButton, gbc_globalSettingsButton);
 
-    aboutButton = new JButton("About");
+    aboutButton = new JButton(Localizer.localize("AboutButtonText"));
     aboutButton.setIcon(new ImageIcon(SwingSaneWindow.class
         .getResource("/com/famfamfam/silk/information.png")));
     aboutButton.setFont(UIManager.getFont("Button.font"));
