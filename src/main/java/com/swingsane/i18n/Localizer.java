@@ -1,6 +1,7 @@
 package com.swingsane.i18n;
 
 import java.util.Locale;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
@@ -51,9 +52,9 @@ public final class Localizer {
     Localizer.currentLocale = currentLocale;
     try {
       ResourceBundle.getBundle(MESSAGES_RESOURCE, currentLocale);
-    } catch (Exception ex) {
+    } catch (MissingResourceException ex) {
       ResourceBundle.getBundle(MESSAGES_RESOURCE, DEFAULT_LOCALE);
-      currentLocale = DEFAULT_LOCALE;
+      Localizer.currentLocale = DEFAULT_LOCALE;
     }
   }
 
