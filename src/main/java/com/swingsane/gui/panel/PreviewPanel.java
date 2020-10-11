@@ -208,12 +208,33 @@ MouseWheelListener {
   }
 
   private File getSaveDirectory() {
-    JFileChooser fd = new JFileChooser();
+    JFileChooser fd = new JFileChooser(){
+      private static final long serialVersionUID = 7919427933588163126L;
+      public void approveSelection() {
+        File f = getSelectedFile();
+        if (f.exists() && getDialogType() == SAVE_DIALOG) {
+          int result = JOptionPane.showConfirmDialog(this,
+                  "The file "+f.getName()+" exists, overwrite?", "Existing file",
+                  JOptionPane.YES_NO_CANCEL_OPTION);
+          switch (result) {
+            case JOptionPane.YES_OPTION:
+              super.approveSelection();
+              return;
+            case JOptionPane.CANCEL_OPTION:
+              cancelSelection();
+              return;
+            default:
+              return;
+          }
+        }
+        super.approveSelection();
+      }
+    };
     fd.setCurrentDirectory(last_save_directory);
     fd.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     fd.setDialogTitle(Localizer.localize("SaveImagesToDirectoryTittle"));
     fd.setAcceptAllFileFilterUsed(false);
-    if (fd.showOpenDialog(getRootPane().getTopLevelAncestor()) == JFileChooser.APPROVE_OPTION) {
+    if (fd.showSaveDialog(getRootPane().getTopLevelAncestor()) == JFileChooser.APPROVE_OPTION) {
       File directory = fd.getCurrentDirectory();
       File selectedFile = fd.getSelectedFile();
       last_save_directory = directory;
@@ -227,17 +248,37 @@ MouseWheelListener {
   }
 
   private File getSaveFile(String filename, String extension) {
-    JFileChooser fd = new JFileChooser();
+    JFileChooser fd = new JFileChooser(){
+      private static final long serialVersionUID = 7919427933588163126L;
+      public void approveSelection() {
+        File f = getSelectedFile();
+        if (f.exists() && getDialogType() == SAVE_DIALOG) {
+          int result = JOptionPane.showConfirmDialog(this,
+                  "The file "+f.getName()+" exists, overwrite?", "Existing file",
+                  JOptionPane.YES_NO_CANCEL_OPTION);
+          switch (result) {
+            case JOptionPane.YES_OPTION:
+              super.approveSelection();
+              return;
+            case JOptionPane.CANCEL_OPTION:
+              cancelSelection();
+              return;
+            default:
+              return;
+          }
+        }
+        super.approveSelection();
+      }
+    };
     fd.setDialogTitle(Localizer.localize("SaveImagesToFileTittle"));
     fd.setCurrentDirectory(last_save_directory);
     fd.setFileSelectionMode(JFileChooser.FILES_ONLY);
-    fd.setDialogType(JFileChooser.SAVE_DIALOG);
     fd.setMultiSelectionEnabled(false);
     fd.setSelectedFile(new File(filename + "." + extension));
-    FileNameExtensionFilter filter = new FileNameExtensionFilter(null, extension);
+    FileNameExtensionFilter filter = new FileNameExtensionFilter("type: "+extension, extension);
     fd.setFileFilter(filter);
 
-    if (fd.showOpenDialog(getRootPane().getTopLevelAncestor()) == JFileChooser.APPROVE_OPTION) {
+    if (fd.showSaveDialog(getRootPane().getTopLevelAncestor()) == JFileChooser.APPROVE_OPTION) {
       File directory = fd.getCurrentDirectory();
       File selectedFile = fd.getSelectedFile();
       last_save_directory = directory;
