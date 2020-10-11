@@ -170,9 +170,11 @@ MouseWheelListener {
   private JLabel cropLabel;
 
   private IPreferredDefaults preferredDefaults;
+  private File last_save_directory;
 
   public PreviewPanel() {
     initComponents();
+    last_save_directory = new File(".");
   }
 
   public final void addImage(ScanEvent scanEvent) throws IOException {
@@ -207,13 +209,14 @@ MouseWheelListener {
 
   private File getSaveDirectory() {
     JFileChooser fd = new JFileChooser();
-    //fd.setCurrentDirectory(new File("."));
+    fd.setCurrentDirectory(last_save_directory);
     fd.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     fd.setDialogTitle(Localizer.localize("SaveImagesToDirectoryTittle"));
     fd.setAcceptAllFileFilterUsed(false);
     if (fd.showOpenDialog(getRootPane().getTopLevelAncestor()) == JFileChooser.APPROVE_OPTION) {
       File directory = fd.getCurrentDirectory();
       File selectedFile = fd.getSelectedFile();
+      last_save_directory = directory;
       if ((selectedFile != null) && selectedFile.isDirectory()) {
         return selectedFile;
       } else if (directory != null) {
@@ -226,7 +229,7 @@ MouseWheelListener {
   private File getSaveFile(String filename, String extension) {
     JFileChooser fd = new JFileChooser();
     fd.setDialogTitle(Localizer.localize("SaveImagesToFileTittle"));
-    //fd.setCurrentDirectory(new File("."));
+    fd.setCurrentDirectory(last_save_directory);
     fd.setFileSelectionMode(JFileChooser.FILES_ONLY);
     fd.setDialogType(JFileChooser.SAVE_DIALOG);
     fd.setMultiSelectionEnabled(false);
@@ -237,6 +240,7 @@ MouseWheelListener {
     if (fd.showOpenDialog(getRootPane().getTopLevelAncestor()) == JFileChooser.APPROVE_OPTION) {
       File directory = fd.getCurrentDirectory();
       File selectedFile = fd.getSelectedFile();
+      last_save_directory = directory;
       return selectedFile;
     }
     return null;
