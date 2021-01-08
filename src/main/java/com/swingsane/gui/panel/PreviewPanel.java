@@ -69,7 +69,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.graphics.xobject.PDPixelMap;
+import org.apache.pdfbox.pdmodel.graphics.xobject.PDJpeg;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
 import org.imgscalr.Scalr.Rotation;
 
@@ -1048,7 +1048,7 @@ MouseWheelListener {
           notification.message(Localizer.localize("AddingPageMessage"));
           document.addPage(page);
           PDXObjectImage ximage = null;
-          ximage = new PDPixelMap(document, bufferedImage);
+          ximage = new PDJpeg(document, bufferedImage);
           PDPageContentStream contentStream = new PDPageContentStream(document, page, true, true);
           contentStream.drawXObject(ximage, 0, 0, bufferedImage.getWidth(),
                   bufferedImage.getHeight());
@@ -1109,7 +1109,7 @@ MouseWheelListener {
           notification.message(Localizer.localize("AddingPageMessage"));
           document.addPage(page);
           PDXObjectImage ximage = null;
-          ximage = new PDPixelMap(document, bufferedImage);
+          ximage = new PDJpeg(document, bufferedImage);
           PDPageContentStream contentStream = new PDPageContentStream(document, page, true, true);
           contentStream.drawXObject(ximage, 0, 0, bufferedImage.getWidth(),
               bufferedImage.getHeight());
